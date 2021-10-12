@@ -9,6 +9,7 @@ export const todoSlice=createSlice({
                 id:'2',title:'read a book',completed:false
             }
         ],
+        activeFilter:'all',
     },
     reducers:{
         AddTodo:(state,action)=>{
@@ -23,9 +24,21 @@ export const todoSlice=createSlice({
             const id=action.payload;
             const filtered=state.items.filter((item)=>item.id!==id);
             state.items=filtered;
+        },
+        changeActiveFilter:(state,action)=>{
+            state.activeFilter=action.payload;
+
+        },
+        clearFiltered:(state)=>{
+            const filtered=state.items.filter(item=>item.completed===false);
+            state.items=filtered;
         }
-    },
+
+        
+    
+}
 
 })
-export const {AddTodo,toggle,destroy}=todoSlice.actions;
+export const selectTodos=(state)=>state.todos.items;
+export const {AddTodo,toggle,destroy,changeActiveFilter,clearFiltered}=todoSlice.actions;
 export default todoSlice.reducer;
